@@ -1,27 +1,17 @@
-close all
-clear
-clc
+function test_median_out = test_median(input_image)
+image = rgb2ycbcr(input_image);
+%orig_image = imread("data_students/wiseonRocks_square/wiseonRocks_square_01_0.jpg");
+window_size = [10 10];
+filtered_image_Y = median_filter(image(:,:,1),window_size);
+filtered_image_Cb = median_filter(image(:,:,2),window_size);
+filtered_image_Cr = median_filter(image(:,:,3),window_size);
+filtered_image = cat(3, filtered_image_Y,filtered_image_Cb,filtered_image_Cr);
+filtered_image = ycbcr2rgb(filtered_image);
+test_median_out = imsharpen(filtered_image,'Radius',2,'Amount',1,'Threshold',0.5);
+% mse_out = mse(final_image,orig_image);
+% psnr_out = psnr(final_image,orig_image);
+% ssim_out = ssim(final_image,orig_image);
+% unique_out = mslUNIQUE(final_image,orig_image);
+% montage({input_image, final_image,input_image(200:400,200:400,:),final_image(200:400,200:400,:)})
 
-image = rgb2ycbcr(imread("data_students/brussels3/brussels3_07_3.jpg"));
-orig_image = imread("data_students/brussels3/brussels3_01_0.jpg");
-window_size = [15 15];
-filtered_image_R = median_filter(image(:,:,1),window_size);
-filtered_image_G = median_filter(image(:,:,2),window_size);
-filtered_image_B = median_filter(image(:,:,3),window_size);
-filtered_image = cat(3, filtered_image_R,filtered_image_G,filtered_image_B);
-sharpened_filtered = imsharpen(filtered_image,'Radius',2,'Amount',1);
-final_image = ycbcr2rgb(sharpened_filtered);
-mse_out = mse(final_image,orig_image);
-%csv_out = msl_csv(sharpened_filtered,orig_image);
-psnr_out = psnr(final_image,orig_image);
-ssim_out = ssim(final_image,orig_image);
-unique_out = mslUNIQUE(final_image,orig_image);
-
-% subplot(1,4,1)
-% imshow(orig_image)
-% subplot(1,4,2)
-% imshow(image)
-subplot(1,2,1)
-imshow(ycbcr2rgb(image))
-subplot(1,2,2)
-imshow(final_image)
+end
