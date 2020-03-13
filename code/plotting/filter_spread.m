@@ -6,7 +6,7 @@ image_class_names = [["02","Resize"];...
                      ["06","Dirty Lens"];...
                      ["07","Salt & Pepper"]];
 %%% Change per noise type                 
-image_class = image_class_names(6,:);
+image_class = image_class_names(3,:);
 %%%
 image_difficulties = ["1","2","3","4","5"];
 mse_total = zeros(size(image_difficulties,2),size(image_sets,2));
@@ -21,7 +21,7 @@ for j = 1:size(image_sets,2)
             "_",image_class(1),"_",image_difficulties(i),".jpg"));
         
         %%% Change per filter
-        final_image = test_median(input_image);
+        final_image = test_high_contrast_enh(input_image);
         %%%
         mse_total(i,j) = mse(final_image,orig_image);
         psnr_total(i,j) = psnr(final_image,orig_image);
